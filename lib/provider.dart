@@ -2,25 +2,47 @@ import 'package:flutter/material.dart';
 
 class IntroPro extends ChangeNotifier{
 
-  int pageNo = 1;
+      final darkTheme = ThemeData(
+      primarySwatch: Colors.grey,
+      primaryColor: Colors.black,
+      brightness: Brightness.dark,
+      backgroundColor: const Color(0xFF212121),
+      accentColor: Colors.white,
+      accentIconTheme: IconThemeData(color: Colors.black),
+      dividerColor: Colors.black12,
+      textTheme: TextTheme(
+        bodyText2: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
 
-  String image1 = 'images/image1.png';
-  String image2 = 'images/image2.png';
-  String image3 = 'images/image3.png';
+    final lightTheme = ThemeData(
+      primarySwatch: Colors.grey,
+      primaryColor: Colors.white,
+      brightness: Brightness.light,
+      backgroundColor: const Color(0xFFE5E5E5),
+      accentColor: Colors.black,
+      accentIconTheme: IconThemeData(color: Colors.white),
+      dividerColor: Colors.white54,
+      textTheme: TextTheme(
+        bodyText2: TextStyle(
+        color: Colors.black,
+        ),
+      ),
+    );
 
-  String img1 = 'images/img1.png';
-  String img2 = 'images/img2.png';
-  String img3 = 'images/img3.png';
+   ThemeData _themeData;
+   String _mood;
 
-  String text1 = 'Start to invest \nfor your future';
-  String text2 = 'Follow our tips \nto achieve success!';
-  String text3 = 'Keep your investment safe';
+   getTheme() => _themeData;
 
-  String sub = 'Ex totam praesentium incidunt aut.';
+   IntroPro(this._mood);
 
-  static const Color dark = Color(0xFF000000);
-  static const Color light = Color(0xFFFFFFFF);
-  
-  
-
+   void changeMood(String mood){
+     if(mood == 'dark')
+     _themeData = darkTheme;
+     else _themeData = lightTheme;
+    notifyListeners();
+   }
 }

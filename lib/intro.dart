@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:testFlutterApp/provider.dart';
 
 class Intro extends StatelessWidget {
 
@@ -16,14 +18,16 @@ class Intro extends StatelessWidget {
 
   String sub = 'Ex totam praesentium incidunt aut.';
 
+  bool isSwitched = false;
+
   PageController _controller = PageController(
     initialPage: 0
   );
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<IntroPro>(context);
     return Scaffold(
-      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           children: [
@@ -35,6 +39,20 @@ class Intro extends StatelessWidget {
                   Icon(
                     Icons.keyboard_arrow_left,
                     color: Colors.white,
+                  ),
+                  Text('Dark Mood', 
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold
+                    ),
+                   ),
+                  Switch(
+                    value: isSwitched,
+                    onChanged: (value){
+                      themeNotifier.changeMood('dark');                        
+                    },
+                    activeTrackColor: Colors.white,
+                    activeColor: Colors.black,
                   ),
                   ButtonTheme(
                     materialTapTargetSize: MaterialTapTargetSize
@@ -104,7 +122,6 @@ class Intro extends StatelessWidget {
                 Text(
                   text,
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Raleway'),
@@ -120,7 +137,6 @@ class Intro extends StatelessWidget {
                 Text(
                   sub,
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 12,
                       fontFamily: 'Raleway'),
                 ),
@@ -140,7 +156,6 @@ class Intro extends StatelessWidget {
                 Text(
                   text,
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Raleway'),
@@ -156,7 +171,6 @@ class Intro extends StatelessWidget {
                 Text(
                   sub,
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 12,
                       fontFamily: 'Raleway'),
                 ),
@@ -210,7 +224,6 @@ class Intro extends StatelessWidget {
                 Text(
                   text,
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Raleway'),
@@ -226,7 +239,6 @@ class Intro extends StatelessWidget {
                 Text(
                   sub,
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 12,
                       fontFamily: 'Raleway'),
                 ),
