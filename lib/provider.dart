@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class IntroPro extends ChangeNotifier{
 
+      int _pageNo;
+
       final darkTheme = ThemeData(
       primarySwatch: Colors.grey,
       primaryColor: Colors.black,
       brightness: Brightness.dark,
-      backgroundColor: const Color(0xFF212121),
+      scaffoldBackgroundColor: Colors.black,
       accentColor: Colors.white,
       accentIconTheme: IconThemeData(color: Colors.black),
       dividerColor: Colors.black12,
@@ -33,16 +35,23 @@ class IntroPro extends ChangeNotifier{
     );
 
    ThemeData _themeData;
-   String _mood;
+   bool isSwitched = false;
+   bool _mood;
 
    getTheme() => _themeData;
+    get pageNo => _pageNo;
 
    IntroPro(this._mood);
 
-   void changeMood(String mood){
-     if(mood == 'dark')
+   void changeMood(bool mood){
+     if(mood)
      _themeData = darkTheme;
      else _themeData = lightTheme;
     notifyListeners();
    }
+  
+  void chandPage(int no){
+    _pageNo = no;
+    notifyListeners(); 
+  }
 }

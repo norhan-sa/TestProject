@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:testFlutterApp/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Intro extends StatelessWidget {
 
@@ -30,6 +31,7 @@ class Intro extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(10, 25, 5, 10),
@@ -38,21 +40,29 @@ class Intro extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.keyboard_arrow_left,
-                    color: Colors.white,
                   ),
-                  Text('Dark Mood', 
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold
-                    ),
-                   ),
-                  Switch(
-                    value: isSwitched,
-                    onChanged: (value){
-                      themeNotifier.changeMood('dark');                        
-                    },
-                    activeTrackColor: Colors.white,
-                    activeColor: Colors.black,
+                  SizedBox(width:3),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('Dark Mood', 
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      SizedBox(width:5),
+                      Switch(
+                        value: themeNotifier.isSwitched,
+                        onChanged: (value){
+                          print(value);
+                          themeNotifier.isSwitched = value;
+                          themeNotifier.changeMood(value);
+                        },
+                        activeTrackColor: Colors.white,
+                        activeColor: Colors.black,
+                      ),
+                    ],
                   ),
                   ButtonTheme(
                     materialTapTargetSize: MaterialTapTargetSize
@@ -67,7 +77,6 @@ class Intro extends StatelessWidget {
                         'Skip',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -75,9 +84,12 @@ class Intro extends StatelessWidget {
                 ],
               )
             ),
-            Expanded(
+            Flexible(
               child: PageView(
                 controller: _controller,
+                onPageChanged: (int page) {
+                  themeNotifier.chandPage(page);
+                },
                 children: [
                   mybody(image1 , img1 , text1 , sub , 1),
                   mybody(image2 , img2 , text2 , sub , 2),
@@ -85,12 +97,42 @@ class Intro extends StatelessWidget {
                 ],
               ),
             ),
+            Consumer<IntroPro>(
+              builder: (_ , instance , child){
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    for (int i = 0; i < 3; i++)
+                      if (i == instance.pageNo) ...[circleBar(true)] else
+                      circleBar(false),
+                  ],
+                );
+              }
+            ),
           ],
         ),
       ),
     );
   }
 
+  Widget circleBar(bool isActive) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 150),
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      height: isActive ? 12 : 8,
+      width: isActive ? 20 : 8,
+      decoration: BoxDecoration(
+        color: isActive ? Color(0xE432C1) : Color(0x000000),
+        border: Border.all(
+          color: Color(0xE432C1),
+          width: 5,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(12),
+        ),
+      ),
+    );
+  }
 
   Widget mybody(image , img , text , sub , number){
     

@@ -7,7 +7,7 @@ void main() {
 
   runApp(
     ChangeNotifierProvider<IntroPro>(
-      create: (context)=> IntroPro('dark'),
+      create: (context)=> IntroPro(true),
       child: MyApp(),
     ),
   );
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 
     return Consumer<IntroPro>(
       builder: (_ , instance , child){
-         MaterialApp(
+        return MaterialApp(
             title: 'Norhan App',
             theme: instance.getTheme(),
             home: Intro(),
